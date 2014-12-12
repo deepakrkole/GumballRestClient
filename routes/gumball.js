@@ -2,21 +2,23 @@
  * New node file
  */
 var MongoClient = require('mongodb').MongoClient;
-exports.getCall = function(req, res){
+
+var dbURL="mongodb://deepak:deepak@ds061360.mongolab.com:61360/mongo";
+var data,doc;
+exports.show = function(req, res){
 	var id=parseInt(req.params.id);
-	var userName="arpit177";
-	var password="Saibaba177";
-	MongoClient.connect("mongodb://"+userName+":"+password+"@ds061370.mongolab.com:61370/CloudFoundry_t5iovmoo_jsd9o18d", function(err, db) {
+	MongoClient.connect("mongodb://deepak:deepak@ds061360.mongolab.com:61360/mongo", function(err, db) {
 		  if(!err) {
-		    console.log("We are connected");
+		    console.log("Connecting...");
+			console.log("Connected");
 		    var collection=db.collection('gumball');
 		    collection.find({id:id}).toArray(function(err,docs){
-		    	
-		    	var data =docs[0];
+		       	var data =docs[0];
 		    	console.log(data);
 		    	res.writeHead(200,{"Content-Type":"application/json"});
 		    	res.end(JSON.stringify(data)+"\n");
 		    });
+		   
 		  }else{
 			  
 			 console.log(err);
@@ -25,45 +27,37 @@ exports.getCall = function(req, res){
 };
 
 
-exports.putCall=function(req,res){
+exports.update=function(req,res){
 	
 	var countGumballs=req.body.countGumballs;
 	var id=parseInt(req.params.id);
-	var userName="arpit177";
-	var password="Saibaba177";
-	MongoClient.connect("mongodb://"+userName+":"+password+"@ds061370.mongolab.com:61370/CloudFoundry_t5iovmoo_jsd9o18d", function(err, db) {
+	MongoClient.connect("mongodb://deepak:deepak@ds061360.mongolab.com:61360/mongo", function(err, db) {
 		  if(!err) {
-		    console.log("We are connected");
+			console.log("Connecting...");
+			console.log("Connected");
 		    var collection=db.collection('gumball');
 		    collection.find({id:id}).toArray(function(err,docs){
-		    	
 		    	var data =docs[0];
 		    	console.log(data);
 		    	var count=data.countGumballs;
 		    	if(count>0){
 		    		count--;
-		    		collection.update({id:id},{$set:{countGumballs:countGumballs}},function(err,results){
-		    			
-		    			console.log("count is ="+countGumballs);
-		    			
-		    			res.writeHead(200,{"Content-Type":"application/json"});
-				    	res.end(JSON.stringify("SuccessFull updated")+"\n");
-		    		})
-		    		
-		    		
-		    	}
-		    	
-		    	
-		    	
-		    	
+		    		collection.update({
+		    					id:id},{
+		    							$set:{
+		    								countGumballs:countGumballs
+		    									}},function(err,results){
+		    						    			console.log("count is ="+countGumballs);
+		    					    				res.writeHead(200,{"Content-Type":"application/json"});
+				    								res.end(JSON.stringify("SuccessFull updated")+"\n");
+		    							});
+		    		}
 		    });
 		  }else{
 			  
 			  res.writeHead(200,{"Content-Type":"application/json"});
 		    	res.end(JSON.stringify("Error")+"\n");
 		  }
-		//db.close();
+		db.close();
 		});
-	
-	
-}
+};
