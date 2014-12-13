@@ -11,8 +11,8 @@ exports.show = function(req, res){
 		  if(!err) {
 		    console.log("Connecting...");
 			console.log("Connected");
-		    var collection=db.collection('gumball');
-		    collection.find({id:id}).toArray(function(err,docs){
+		    var database=db.database('gumball');
+		    database.find({id:id}).toArray(function(err,docs){
 		       	var data =docs[0];
 		    	console.log(data);
 		    	res.writeHead(200,{"Content-Type":"application/json"});
@@ -35,14 +35,14 @@ exports.update=function(req,res){
 		  if(!err) {
 			console.log("Connecting...");
 			console.log("Connected");
-		    var collection=db.collection('gumball');
-		    collection.find({id:id}).toArray(function(err,docs){
+		    var database=db.database('gumball');
+		    database.find({id:id}).toArray(function(err,docs){
 		    	var data =docs[0];
 		    	console.log(data);
 		    	var count=data.countGumballs;
 		    	if(count>0){
 		    		count--;
-		    		collection.update({
+		    		database.update({
 		    					id:id},{
 		    							$set:{
 		    								countGumballs:countGumballs
