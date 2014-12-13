@@ -8,7 +8,7 @@ var express = require('express')
 var app = express();
 
 // all environments
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 5000);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 9000);
 app.set('ip_address', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -26,8 +26,8 @@ if ('development'=== app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/gumball/:id',restCall.show);
-app.put('/gumball/:id',restCall.update);
+app.get('/gumball/:id',restCall.getCall);
+app.put('/gumball/:id',restCall.putCall);
 
 http.createServer(app).listen(app.get('port'), app.get('ip_address'),function(){
 	  console.log('Express server listening on port ' + app.get('port'));
