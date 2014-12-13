@@ -1,5 +1,5 @@
 {
-  "name": "GumballLab",
+  "name": "GumballRest",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
   "dependencies": {
     "express": "3.2.6",
     "ejs": "*",
-    	"Mongodb":"*",
-    		"mongoose":"*"
+    	"mongodb":"*"
   }
 }
